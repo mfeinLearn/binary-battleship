@@ -1,8 +1,62 @@
+import random
+
+def waves():
+    print("waves called!")
+
+def random_wave_generator():
+    number = random.randint(1, 10)
+    result = is_power_of_two(number)
+    x = result
+    ## if it is even then a wave happens
+    if is_even(x):
+        print(f"Just so you know the random value is {(lambda x: 'a power of 2!' if (x > 0 and (x & (x - 1)) == 0) else 'not a power of 2')(x)}")    
+        waves()
+    else:
+        print('Nope no waves')
+    
+def is_even(n):
+    return True if (n & 1) == 0 else False
+
+def is_power_of_two(n):
+    return n != 0 and (n & (n - 1)) == 0
+
+def check_if_bit_is_set(grid, position):
+    print("check_if_bit_is_set called!")
+
+def clear_bit(grid, position):
+    print("clear_bit called!")
+
+def flip_bit(grid, position):
+    print("flip_bit called!")
+
+def waves():
+    print("Yes!!! Waves!!! called!")
+
+def godmode(grid):
+    # Prompt for checking if a bit is set
+    check_input = input("Do you want to know if a position is set? Y/N: ").strip().lower()
+    if check_input == 'y':
+        check_if_bit_is_set(grid, 0)  # Position is placeholder for now
+
+    # Prompt for clearing a bit
+    clear_input = input("Do you want me to clear a bit? Y/N: ").strip().lower()
+    if clear_input == 'y':
+        clear_bit(grid, 0)  # Position is placeholder for now
+
+    # Prompt for flipping a bit
+    flip_input = input("Do you want me to flip a bit? Y/N: ").strip().lower()
+    if flip_input == 'y':
+        flip_bit(grid, 0)  # Position is placeholder for now
+
+    # Notify user that waves occuring
+    print("Waves???!!?")
+    random_wave_generator()
+
 def binary_battleship():
     print("Welcome to Binary Battleship! Find ships (1s) in an 8-bit grid.")
     print("Positions are 0-7, right-to-left (0 = rightmost (2^0), 7 = leftmost (2^7)).")
     print("Enter a bit position (0-7) as a number (e.g., '7') or a mask (e.g., '1 << 7' or '0b10000000').")
-    print("Type 'exit' to quit the game or 'restart' to reset the current level.\n")
+    print("Type 'exit' to quit the game, 'restart' to reset the current level, or 'godmode' to enter godmode.\n")
 
     # Define levels: (grid, ship_count, description, hint, mode, initial_ships)
     levels = [
@@ -69,9 +123,9 @@ def binary_battleship():
             print(f"Fired positions: {fired_positions}")
 
             # Get player's input
-            mask_input = input("Enter bit position (0-7) or mask (e.g., '1 << 7') or 'exit'/'restart': ")
+            mask_input = input("Enter bit position (0-7) or mask (e.g., '1 << 7') or 'exit'/'restart'/'godmode': ")
             
-            # Check for exit or restart commands
+            # Check for exit, restart, or godmode commands
             if mask_input.strip().lower() == "exit":
                 print("Thanks for playing Binary Battleship! Goodbye!")
                 return
@@ -82,6 +136,9 @@ def binary_battleship():
                 explored = 0
                 moves = 0
                 fired_positions = []
+                continue
+            if mask_input.strip().lower() == "godmode":
+                godmode(grid)
                 continue
 
             try:
@@ -148,7 +205,7 @@ def binary_battleship():
                         print(f"Miss at position {position} (mask: {bin(mask)[2:].zfill(8)})!")
 
             except Exception as e:
-                print(f"Error in your input: {e}. Enter a position (0-7), '1 << n', 'exit', or 'restart'.")
+                print(f"Error in your input: {e}. Enter a position (0-7), '1 << n', 'exit', 'restart', or 'godmode'.")
                 continue
 
         print(f"\nLevel {i} complete! Took {moves} moves to find all ships.")
