@@ -32,6 +32,10 @@ def flip_bit(grid, position):
 def waves():
     print("Yes!!! Waves!!! called!")
 
+def set_bit(x, position):
+    mask = 1 << position
+    return x | mask 
+
 def godmode(grid):
     # Prompt for checking if a bit is set
     check_input = input("Do you want to know if a position is set? Y/N: ").strip().lower()
@@ -48,6 +52,12 @@ def godmode(grid):
     if flip_input == 'y':
         flip_bit(grid, 0)  # Position is placeholder for now
 
+    # Prompt for setting a bit
+    set_bit = input("Do you want me to set a bit? Y/N: ").strip().lower()
+    if set_bit == 'y':
+        position = input("Ok! At which position?!")
+        set_bit(grid, position)
+
     # Notify user that waves occuring
     print("Waves???!!?")
     random_wave_generator()
@@ -60,14 +70,19 @@ def count_set_bits(n):
     return count
 
 
+
+
 # grid = 0b10101010
 # print(f"Set bits should be 4==> {count_set_bits(grid)}. ") 
 
 
 def binary_battleship():
+    print("---------------------------------------------------------------")
     print("Welcome to Binary Battleship! Find ships (1s) in an 8-bit grid.")
     print("Positions are 0-7, right-to-left (0 = rightmost (2^0), 7 = leftmost (2^7)).")
     print("Enter a bit position (0-7) as a number (e.g., '7') or a mask (e.g., '1 << 7' or '0b10000000').")
+    
+    print("---------------------------------------------------------------")
     print("Type 'exit' to quit the game, 'restart' to reset the current level, or 'godmode' to enter godmode.\n")
 
     # Define levels: (grid, ship_count, description, hint, mode, initial_ships)
