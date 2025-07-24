@@ -1,19 +1,46 @@
 import random
 
-def waves():
-    print("waves called!")
+def show_bitwise_operators(num):
+    # Using a second number for operations that require two operands
+    num2 = 5
+    print(f"Original number: {num} (Binary: {bin(num)[2:].zfill(8)})")
+    print(f"Second number for operations: {num2} (Binary: {bin(num2)[2:].zfill(8)})")
+    print("\nBitwise Operations:")
+    
+    # Bitwise AND (&)
+    result = num & num2
+    print(f"AND (&): {num} & {num2} = {result} (Binary: {bin(result)[2:].zfill(8)})")
+    
+    # Bitwise OR (|)
+    result = num | num2
+    print(f"OR (|): {num} | {num2} = {result} (Binary: {bin(result)[2:].zfill(8)})")
+    
+    # Bitwise XOR (^)
+    result = num ^ num2
+    print(f"XOR (^): {num} ^ {num2} = {result} (Binary: {bin(result)[2:].zfill(8)})")
+    
+    # Bitwise NOT (~)
+    result = ~num
+    print(f"NOT (~): ~{num} = {result} (Binary: {bin(result)[2:].zfill(8)})")
+    
+    # Bitwise Left Shift (<<)
+    shift = 2
+    result = num << shift
+    print(f"Left Shift (<<): {num} << {shift} = {result} (Binary: {bin(result)[2:].zfill(8)})")
+    
+    # Bitwise Right Shift (>>)
+    result = num >> shift
+    print(f"Right Shift (>>): {num} >> {shift} = {result} (Binary: {bin(result)[2:].zfill(8)})")
 
-def random_wave_generator():
-    number = random.randint(1, 10)
+def random_number_generator():
+    number = random.randint(0, 255)
     result = is_power_of_two(number)
     x = result
-    ## if it is even then a wave happens
+    ## if it is even then a power of 2
     if is_even(x):
         print(f"Just so you know the random value is {(lambda x: 'a power of 2!' if (x > 0 and (x & (x - 1)) == 0) else 'not a power of 2')(x)}")    
-        waves()
-    else:
-        print('Nope no waves')
-    
+    return number
+  
 def is_even(n):
     return True if (n & 1) == 0 else False
 
@@ -22,45 +49,35 @@ def is_power_of_two(n):
 
 def check_if_bit_is_set(grid, position):
     print("check_if_bit_is_set called!")
+    num = int(grid, 2)
+    is_set = (num & (1 << position)) != 0
+    print(f"Is bit {position} set in {num}? {is_set}")
 
 def clear_bit(grid, position):
     print("clear_bit called!")
+    byte_to_number = int(grid, 2)
+    number_result = byte_to_number
+    number_result &= ~(1 << position) 
+    print(f"Clear bit {position} in {byte_to_number} : {number_result}") 
 
 def flip_bit(grid, position):
-    print("flip_bit called!")
-
-def waves():
-    print("Yes!!! Waves!!! called!")
-
-def set_bit(x, position):
+    byte_to_number = int(grid, 2)
     mask = 1 << position
-    return x | mask 
+    result = byte_to_number ^ mask
+    print(
+        f"Flipping bit at position {position}:\n"
+        f"  x      = {bin(byte_to_number)} ({byte_to_number})\n"
+        f"  mask   = {bin(mask)} ({mask})\n"
+        f"  result = {bin(result)} ({result})"
+    )
+    return result
 
-def godmode(grid):
-    # Prompt for checking if a bit is set
-    check_input = input("Do you want to know if a position is set? Y/N: ").strip().lower()
-    if check_input == 'y':
-        check_if_bit_is_set(grid, 0)  # Position is placeholder for now
-
-    # Prompt for clearing a bit
-    clear_input = input("Do you want me to clear a bit? Y/N: ").strip().lower()
-    if clear_input == 'y':
-        clear_bit(grid, 0)  # Position is placeholder for now
-
-    # Prompt for flipping a bit
-    flip_input = input("Do you want me to flip a bit? Y/N: ").strip().lower()
-    if flip_input == 'y':
-        flip_bit(grid, 0)  # Position is placeholder for now
-
-    # Prompt for setting a bit
-    set_bit = input("Do you want me to set a bit? Y/N: ").strip().lower()
-    if set_bit == 'y':
-        position = input("Ok! At which position?!")
-        set_bit(grid, position)
-
-    # Notify user that waves occuring
-    print("Waves???!!?")
-    random_wave_generator()
+def set_bit(grid, position):
+    byte_to_number =  int(grid, 2)
+    mask = 1 << position
+    result = byte_to_number | mask
+    print(f"Setting bit at position {position}: x = {bin(byte_to_number)}, mask = {bin(mask)}, result = {bin(result)}")
+    return result
 
 def count_set_bits(n):
     count = 0
@@ -69,21 +86,74 @@ def count_set_bits(n):
         count += 1
     return count
 
+# grid = '0b00000010'
+def tutorial_mode(grid):
+    tutorial_mode_var = input("Do you want to be in tutorial mode? y/n: ")
+    if tutorial_mode_var == 'y':
+        while True:
+            end_tutorial_mode = input("Do you want to quit tutorial mode? y/n: ")
+            if end_tutorial_mode == 'y':
+                print('tutorial ended!')
+                break
+            bitwise_operation_primer = input("Do you want a primer on bitwise operators? y/n: ")
+            if bitwise_operation_primer == 'y':
+                user_input = int(input(" Please provide an integer between 0-255 (inclusive) ")) 
+                show_bitwise_operators(user_input)
+            else:
+                pass
+            # Prompt for checking if a bit is set
+            check_input = input("Do you want to know if a position is set? y/n: ").strip().lower()
+            if check_input == 'y':
+                position = int(input("Ok! At which position? Enter a bit position (0-7) as a number (e.g., '7')!"))
+                check_if_bit_is_set(grid, position)  # Position is placeholder for now
+            else:
+                pass
 
+            # Prompt for clearing a bit
+            clear_input = input("Do you want me to clear a bit? y/n: ").strip().lower()
+            if clear_input == 'y':
+                position = int(input("Ok! At which position? Enter a bit position (0-7) as a number (e.g., '7')!"))
+                clear_bit(grid, position)  # Position is placeholder for now
+            else:
+                pass
 
+            # Prompt for flipping a bit
+            flip_input = input("Do you want me to flip a bit? y/n: ").strip().lower()
+            if flip_input == 'y':
+                position = int(input("Ok! At which position? Enter a bit position (0-7) as a number (e.g., '7')!"))
+                flip_bit(grid, position)  # Position is placeholder for now
+            else: 
+                pass
 
-# grid = 0b10101010
-# print(f"Set bits should be 4==> {count_set_bits(grid)}. ") 
+            # Prompt for setting a bit
+            set_bit_var = input("Do you want me to set a bit? y/n: ").strip().lower()
+            if set_bit_var == 'y':
+                position = int(input("Ok! At which position? Enter a bit position (0-7) as a number (e.g., '7')!"))
+                result = set_bit(grid, position)
+                print(result)
 
+            else:
+                pass
+
+            print(" More practice! No problem! ")
+            print(" I'll changing the byte for use in tutorial! ")
+            print("  Good luck! :) ")
+            number = random_number_generator()
+            grid = bin(number)
+    else:
+        print('Ok! Enjoy the game! :) ')
+    
 
 def binary_battleship():
+    print("** Welcome to Binary Battleship! **")
+    tutorial_grid = '00000101'
+    tutorial_mode(tutorial_grid)
     print("---------------------------------------------------------------")
-    print("Welcome to Binary Battleship! Find ships (1s) in an 8-bit grid.")
+    print("Find ships (1s) in an 8-bit grid.")
     print("Positions are 0-7, right-to-left (0 = rightmost (2^0), 7 = leftmost (2^7)).")
     print("Enter a bit position (0-7) as a number (e.g., '7') or a mask (e.g., '1 << 7' or '0b10000000').")
-    
     print("---------------------------------------------------------------")
-    print("Type 'exit' to quit the game, 'restart' to reset the current level, or 'godmode' to enter godmode.\n")
+    print("Type 'exit' to quit the game, 'restart' to reset the current level, or 'tutorial_mode' to enter tutorial_mode.\n")
 
     # Define levels: (grid, ship_count, description, hint, mode, initial_ships)
     levels = [
@@ -150,9 +220,9 @@ def binary_battleship():
             print(f"Fired positions: {fired_positions}")
 
             # Get player's input
-            mask_input = input("Enter bit position (0-7) or mask (e.g., '1 << 7') or 'exit'/'restart'/'godmode': ")
+            mask_input = input("Enter bit position (0-7) or mask (e.g., '1 << 7') or 'exit'/'restart'/'tutorial_mode': ")
             
-            # Check for exit, restart, or godmode commands
+            # Check for exit, restart, or tutorial_mode commands
             if mask_input.strip().lower() == "exit":
                 print("Thanks for playing Binary Battleship! Goodbye!")
                 return
@@ -164,8 +234,8 @@ def binary_battleship():
                 moves = 0
                 fired_positions = []
                 continue
-            if mask_input.strip().lower() == "godmode":
-                godmode(grid)
+            if mask_input.strip().lower() == "tutorial_mode":
+                tutorial_mode(grid)
                 continue
 
             try:
@@ -232,7 +302,7 @@ def binary_battleship():
                         print(f"Miss at position {position} (mask: {bin(mask)[2:].zfill(8)})!")
 
             except Exception as e:
-                print(f"Error in your input: {e}. Enter a position (0-7), '1 << n', 'exit', 'restart', or 'godmode'.")
+                print(f"Error in your input: {e}. Enter a position (0-7), '1 << n', 'exit', 'restart', or 'tutorial_mode'.")
                 continue
 
         print(f"\nLevel {i} complete! Took {moves} moves to find all ships.")
