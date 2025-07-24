@@ -52,6 +52,18 @@ def godmode(grid):
     print("Waves???!!?")
     random_wave_generator()
 
+def count_set_bits(n):
+    count = 0
+    while n:
+        n &= (n - 1)  
+        count += 1
+    return count
+
+
+# grid = 0b10101010
+# print(f"Set bits should be 4==> {count_set_bits(grid)}. ") 
+
+
 def binary_battleship():
     print("Welcome to Binary Battleship! Find ships (1s) in an 8-bit grid.")
     print("Positions are 0-7, right-to-left (0 = rightmost (2^0), 7 = leftmost (2^7)).")
@@ -190,7 +202,7 @@ def binary_battleship():
                     else:
                         print(f"Non-ship position {position} toggled {'to 1' if (grid & mask) else 'to 0'}.")
                     # Count remaining ships (1s in grid)
-                    ships_remaining = bin(grid).count('1')
+                    ships_remaining = count_set_bits(grid)
                     if ships_remaining == 0:
                         print("All ships toggled to 0!")
                 elif level["mode"] == "not":
@@ -199,7 +211,7 @@ def binary_battleship():
                     if grid & mask:
                         print(f"Hit at position {position} (mask: {bin(mask)[2:].zfill(8)})!")
                         grid &= ~mask  # Clear the ship (set bit to 0)
-                        ships_remaining = bin(grid).count('1')  # Update remaining ships
+                        ships_remaining = count_set_bits(grid) # Update remaining ships
                         print(f"Updated grid: {bin(grid)[2:].zfill(8)}")
                     else:
                         print(f"Miss at position {position} (mask: {bin(mask)[2:].zfill(8)})!")
